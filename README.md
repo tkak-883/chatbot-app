@@ -1,40 +1,123 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# LINE風 ChatGPT チャットボット
 
-## Getting Started
+このプロジェクトは、OpenAI GPT APIを使用したシンプルなLINE風チャットボットです。ユーザーがメッセージを入力すると、OpenAIのAPI（gpt-4o-miniまたはgpt-3.5-turbo）を使用して応答を生成します。
 
-First, run the development server:
+## 機能
+
+- LINE風のインターフェース
+- テキスト入力と送信機能
+- AIからの返信表示
+- 送信時刻の表示
+- メッセージ入力中のローディングアニメーション
+- エラーハンドリング
+
+## 技術スタック
+
+- Next.js (React)
+- OpenAI API
+- CSS (LINE風デザイン)
+
+## セットアップ手順
+
+### 前提条件
+
+- Node.js v14以上
+- npm または yarn
+- OpenAI APIキー
+
+### インストール
+
+1. リポジトリをクローンまたはダウンロード
+
+```bash
+git clone [リポジトリURL]
+cd chatbot-app
+```
+
+2. 依存関係のインストール
+
+```bash
+npm install
+# または
+yarn install
+```
+
+3. 環境変数の設定
+
+プロジェクトのルートディレクトリに `.env.local` ファイルを作成し、以下の内容を追加します：
+
+```
+OPENAI_API_KEY=あなたのOpenAI APIキー
+```
+
+### 開発サーバーの起動
 
 ```bash
 npm run dev
-# or
+# または
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+ブラウザで `http://localhost:3000` を開くと、アプリケーションが表示されます。
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## ファイル構造
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+```
+chatbot-app/
+├── .env.local        # API認証情報（手動で作成）
+├── .gitignore        # Git除外ファイル
+├── package.json      # 依存関係
+├── next.config.js    # Next.js設定
+├── pages/
+│   ├── _app.js       # アプリケーション設定
+│   ├── index.js      # チャットインターフェース
+│   ├── api/
+│   │   └── chat.js   # APIエンドポイント
+└── styles/
+    └── globals.css   # スタイル定義
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+## APIキーの取得方法
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. [OpenAIのウェブサイト](https://platform.openai.com/)にアクセスし、アカウント作成（または既存アカウントでログイン）
+2. 右上のプロフィールアイコンをクリック → 「View API Keys」を選択
+3. 「Create New Secret Key」をクリックして新しいAPIキーを生成
+4. 生成されたキーを `.env.local` ファイルにコピー
 
-## Learn More
+## Vercelへのデプロイ
 
-To learn more about Next.js, take a look at the following resources:
+このアプリケーションはVercelへのデプロイに対応しています。
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+1. [Vercel](https://vercel.com/)にアカウント作成（またはログイン）
+2. 「New Project」をクリック
+3. リポジトリをインポート
+4. 「Environment Variables」セクションで、以下の変数を追加：
+   - `OPENAI_API_KEY` = あなたのOpenAI APIキー
+5. 「Deploy」ボタンをクリック
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## トラブルシューティング
 
-## Deploy on Vercel
+### APIエラーが発生する場合
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- APIキーが正しく設定されているか確認
+- OpenAIのアカウントが有効で、支払い情報が設定されているか確認
+- モデル名が正しいか確認（APIエラーの場合は自動的にgpt-3.5-turboにフォールバック）
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+### 開発サーバーの問題
+
+以下のコマンドで依存関係を再インストールし、開発サーバーを再起動：
+
+```bash
+rm -rf node_modules .next
+npm install
+npm run dev
+```
+
+## 注意事項
+
+- OpenAI APIは有料サービスです。使用量に応じて料金が発生します。
+- APIキーは公開リポジトリにコミットしないよう注意してください。
+
+## ライセンス
+
+MIT
